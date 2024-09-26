@@ -1,0 +1,86 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Produto {
+    private String nome;       
+    private double precoCusto;   
+    private double precoVenda;       
+    private LocalDate dataFabricacao; 
+    private LocalDate dataValidade;   
+
+    // Construtor que recebe todos os atributos por parâmetro
+    public Produto(String nome, double precoCusto, double precoVenda, LocalDate dataFabricacao, LocalDate dataValidade) {
+        this.nome = nome;
+        this.precoCusto = precoCusto;
+        this.precoVenda = precoVenda;
+        this.dataFabricacao = dataFabricacao;
+        this.dataValidade = dataValidade;
+    }
+
+    // Construtor que recebe nome, preço de custo, preço de venda e data de fabricação
+    public Produto(String nome, double precoCusto, double precoVenda, LocalDate dataFabricacao) {
+        this.nome = nome;
+        this.precoCusto = precoCusto;
+        this.precoVenda = precoVenda;
+        this.dataFabricacao = dataFabricacao;
+        this.dataValidade = dataFabricacao.plusMonths(1); // Dataa  de validade é 1 mês após a data de fabricação
+    }
+
+    // Construtor que recebe apenas nome e preço de custo
+    public Produto(String nome, double precoCusto) {
+        this.nome = nome;
+        this.precoCusto = precoCusto;
+        this.precoVenda = precoCusto * 1.1; // Preço de venda é 10% a mais sobre o preço de custo
+        this.dataFabricacao = LocalDate.now(); // Assume a data de fabricação como a data atuall
+        this.dataValidade = this.dataFabricacao.plusMonths(1); // Data de validade é 1 mês após a data de fabricação
+    }
+
+    // Métodos getters
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPrecoCusto() {
+        return precoCusto;
+    }
+
+    public double getPrecoVenda() {
+        return precoVenda;
+    }
+
+    public LocalDate getDataFabricacao() {
+        return dataFabricacao;
+    }
+
+    public LocalDate getDataValidade() {
+        return dataValidade;
+    }
+
+    // Método toString para exibir informações do produto
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return "Produto{" +
+                "nome='" + nome + '\'' +
+                ", precoCusto=" + precoCusto +
+                ", precoVenda=" + precoVenda +
+                ", dataFabricacao=" + dataFabricacao.format(formatter) +
+                ", dataValidade=" + dataValidade.format(formatter) +
+                '}';
+    }
+
+    // Método main para testar a classe Produto
+    public static void main(String[] args) {
+        // Testando o construtor que recebe todos os atributos
+        Produto produto1 = new Produto("Produto A", 100.0, 120.0, LocalDate.now(), LocalDate.now().plusMonths(6));
+        System.out.println(produto1);
+
+        // Testando o construtor que recebe nome, preço de custo, preço de venda e data de fabricação
+        Produto produto2 = new Produto("Produto B", 50.0, 60.0, LocalDate.now());
+        System.out.println(produto2);
+
+        // Testando o construtor que recebe apenas nome e preço de custo
+        Produto produto3 = new Produto("Produto C", 30.0);
+        System.out.println(produto3);
+    }
+}
